@@ -1,0 +1,27 @@
+# O Genie space COMO CODIGO.
+#
+# A definicao inteira -- tabelas, colunas, instrucoes e perguntas de exemplo --
+# esta em comercial.geniespace.json, e esse arquivo e GERADO:
+#
+#   python scripts/gerar-geniespace.py <profile>
+#
+# Nao edite o JSON a mao. A API exige um id de 32 hexadecimais em cada pergunta
+# e instrucao, e exige as listas ordenadas; o gerador deriva o id do md5 do
+# proprio conteudo, entao um redeploy nao recria pergunta nenhuma nem enche o
+# diff do Git de ruido.
+#
+# ARMADILHA DO BUNDLE: a chave do recurso (`genie_comercial`) tem que ser
+# DIFERENTE da chave do dashboard -- o bundle recusa duas chaves iguais mesmo
+# sendo tipos de recurso diferentes. E, como no dashboard, trocar a chave depois
+# faz o bundle APAGAR e recriar o space, com URL nova.
+resources:
+  genie_spaces:
+    genie_comercial:
+      title: Rota do Perfume - Comercial
+      description: >-
+        Perguntas de negocio sobre vendas, margem, clientes em risco, ruptura e
+        efeito de lancamento. Le apenas a gold: as 6 views de negocio, o fato de
+        vendas e as dimensoes.
+      warehouse_id: ${var.warehouse_id}
+      file_path: ./comercial.geniespace.json
+      parent_path: /Workspace/Users/${workspace.current_user.userName}

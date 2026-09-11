@@ -114,3 +114,8 @@ ALTER TABLE lakehouse_rotaperfume.gold.fato_vendas ALTER COLUMN ano
   COMMENT 'Ano do pedido. Coluna de particao.';
 ALTER TABLE lakehouse_rotaperfume.gold.fato_vendas ALTER COLUMN mes
   COMMENT 'Mes do pedido, de 1 a 12. Coluna de particao. Outubro e o pico do setor, janeiro o vale.';
+-- Coluna tecnica, e mesmo assim comentada: a auditoria de metadado exige 100%
+-- das colunas do fato, e "e so controle" e exatamente a desculpa que deixa uma
+-- coluna sem explicacao na frente do agente.
+ALTER TABLE lakehouse_rotaperfume.gold.fato_vendas ALTER COLUMN _processado_em
+  COMMENT 'Quando esta linha foi gravada pelo pipeline. Coluna de controle, nao de negocio: nao use para analise temporal de vendas - a data do pedido e data_pedido.';

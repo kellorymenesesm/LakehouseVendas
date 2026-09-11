@@ -1,0 +1,902 @@
+{
+  "config": {
+    "sample_questions": [
+      {
+        "id": "0698e66ad6a0f7ca39dac2f828d9941f",
+        "question": [
+          "Quais marcas mais ficam em ruptura?"
+        ]
+      },
+      {
+        "id": "1a3f9bf60a2fbc33ab9a2189ea0dd74f",
+        "question": [
+          "Quem eu ligo essa semana?"
+        ]
+      },
+      {
+        "id": "258fc0f57157a0cfd10024cf73f93f45",
+        "question": [
+          "Quem parou de comprar, e quanto isso custa por mes?"
+        ]
+      },
+      {
+        "id": "4bcb6490768f4bd8dfa74622c8bc093e",
+        "question": [
+          "Qual vendedor bateu a meta no ultimo mes?"
+        ]
+      },
+      {
+        "id": "7208a99ee72d9b45530a57b3a4bed3ce",
+        "question": [
+          "Qual categoria da mais margem, e qual so da volume?"
+        ]
+      },
+      {
+        "id": "bd0f5f720ce407611f0fa87b967e8106",
+        "question": [
+          "Quais marcas mais venderam nos ultimos 6 meses?"
+        ]
+      },
+      {
+        "id": "e3d40e9f9afe28246eae556f6d42271a",
+        "question": [
+          "Por que este cliente esta no topo da minha lista?"
+        ]
+      },
+      {
+        "id": "f499cef2f990de3aea0e530b9ee52e66",
+        "question": [
+          "Dezembro foi um mes ruim?"
+        ]
+      }
+    ]
+  },
+  "data_sources": {
+    "tables": [
+      {
+        "column_configs": [
+          {
+            "column_name": "cidade",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "cliente_id",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "dias_sem_comprar",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "pedidos",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "primeira_compra",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "razao_social",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "receita_historica",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "receita_media_mensal",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "segmento",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "uf",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "ultima_compra",
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.clientes_em_risco"
+      },
+      {
+        "column_configs": [
+          {
+            "column_name": "ano",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "dia",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "dia_semana",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "fim_de_semana",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "mes",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "mes_pico_setor",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "nome_mes",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "trimestre",
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.dim_calendario"
+      },
+      {
+        "column_configs": [
+          {
+            "column_name": "ativo",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "cidade",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "cliente_id",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "cnpj",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "data_cadastro",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "dias_sem_comprar",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "primeiro_pedido",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "razao_social",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "receita_acumulada",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "segmento",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "total_pedidos",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "uf",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "ultimo_pedido",
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.dim_cliente"
+      },
+      {
+        "column_configs": [
+          {
+            "column_name": "categoria",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "custo_unitario",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "data_lancamento",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "descontinuado",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "descricao",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "marca",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "nota_olfativa",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "preco_tabela",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "sku",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "unidade",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.dim_produto"
+      },
+      {
+        "column_configs": [
+          {
+            "column_name": "ativo",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "data_admissao",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "data_desligamento",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "meta_mensal",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "nome",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "regiao",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "uf",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "vendedor_id",
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.dim_vendedor"
+      },
+      {
+        "column_configs": [
+          {
+            "column_name": "categoria",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "clientes_120d",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "data_lancamento",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "descricao",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "dias_no_catalogo",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "marca",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "pct_nos_120d",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "receita_120d",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "receita_apos_120d",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "receita_total",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "sku",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "unidades_120d",
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.efeito_lancamento"
+      },
+      {
+        "column_configs": [
+          {
+            "column_name": "ano",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "canal",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "categoria",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "cidade",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "cliente_id",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "custo",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "data_pedido",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "devolucao",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "item_id",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "marca",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "margem",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "mes",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "nota_olfativa",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "pedido_id",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "preco_praticado",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "quantidade",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "razao_social",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "receita",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "segmento",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "sku",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "sku_descontinuado",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "uf",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "vendedor_id",
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.fato_vendas"
+      },
+      {
+        "column_configs": [
+          {
+            "column_name": "cidade",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "cliente_id",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "faixa",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "motivo",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "ordem",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "razao_social",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "score",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "sugestao",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "ticket_medio",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "uf",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "vendedor",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "versao_modelo",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.fila_semanal"
+      },
+      {
+        "column_configs": [
+          {
+            "column_name": "categoria",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "margem",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "margem_pct",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "participacao_pct",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "quantidade",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "receita",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "skus",
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.margem_por_categoria"
+      },
+      {
+        "column_configs": [
+          {
+            "column_name": "clientes",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "marca",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "margem",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "margem_pct",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "participacao_pct",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "pedidos",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "posicao",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "receita",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "skus",
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.ranking_marcas"
+      },
+      {
+        "column_configs": [
+          {
+            "column_name": "ano",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "clientes",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "margem",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "margem_pct",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "mes",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "mes_pico_setor",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "nome_mes",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "pedidos",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "receita",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "ticket_medio",
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.receita_mensal"
+      },
+      {
+        "column_configs": [
+          {
+            "column_name": "marca",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "primeiro_snapshot",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "ruptura_pct",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "saldo_medio",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "skus",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "snapshots",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "snapshots_em_ruptura",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "ultimo_snapshot",
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.ruptura_por_marca"
+      },
+      {
+        "column_configs": [
+          {
+            "column_name": "cliente_id",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "faixa",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "score",
+            "enable_format_assistance": true
+          },
+          {
+            "column_name": "versao_modelo",
+            "enable_entity_matching": true,
+            "enable_format_assistance": true
+          }
+        ],
+        "identifier": "lakehouse_rotaperfume.gold.score_propensao"
+      }
+    ]
+  },
+  "instructions": {
+    "example_question_sqls": [
+      {
+        "id": "1a3f9bf60a2fbc33ab9a2189ea0dd74f",
+        "question": [
+          "Quem eu ligo essa semana?"
+        ],
+        "sql": [
+          "SELECT vendedor,\n",
+          "       ordem,\n",
+          "       razao_social,\n",
+          "       cidade,\n",
+          "       ROUND(score, 3) AS score,\n",
+          "       motivo,\n",
+          "       sugestao\n",
+          "FROM lakehouse_rotaperfume.gold.fila_semanal\n",
+          "ORDER BY vendedor, ordem"
+        ]
+      },
+      {
+        "id": "66464efc1e3474cc114101b1765312aa",
+        "question": [
+          "Quais marcas mais faltam na prateleira?"
+        ],
+        "sql": [
+          "SELECT marca,\n",
+          "       snapshots,\n",
+          "       snapshots_em_ruptura,\n",
+          "       ruptura_pct\n",
+          "FROM lakehouse_rotaperfume.gold.ruptura_por_marca\n",
+          "ORDER BY ruptura_pct DESC"
+        ]
+      },
+      {
+        "id": "7349cfa1da407441e377b35581249ee9",
+        "question": [
+          "Qual categoria da mais margem?"
+        ],
+        "sql": [
+          "SELECT categoria,\n",
+          "       receita,\n",
+          "       margem,\n",
+          "       margem_pct\n",
+          "FROM lakehouse_rotaperfume.gold.margem_por_categoria\n",
+          "ORDER BY margem_pct DESC"
+        ]
+      },
+      {
+        "id": "9f2051957f53be587fb3302890645781",
+        "question": [
+          "Por que este cliente esta na minha lista?"
+        ],
+        "sql": [
+          "SELECT razao_social,\n",
+          "       vendedor,\n",
+          "       ordem,\n",
+          "       ROUND(score, 3) AS score,\n",
+          "       faixa,\n",
+          "       motivo\n",
+          "FROM lakehouse_rotaperfume.gold.fila_semanal\n",
+          "ORDER BY score DESC"
+        ]
+      },
+      {
+        "id": "b4e9207aa33ab041b8732d75d6044332",
+        "question": [
+          "Quais clientes pararam de comprar, e quanta receita por mes parou junto?"
+        ],
+        "sql": [
+          "SELECT razao_social,\n",
+          "       cidade,\n",
+          "       uf,\n",
+          "       dias_sem_comprar,\n",
+          "       receita_media_mensal\n",
+          "FROM lakehouse_rotaperfume.gold.clientes_em_risco\n",
+          "ORDER BY receita_media_mensal DESC NULLS LAST"
+        ]
+      },
+      {
+        "id": "bd0f5f720ce407611f0fa87b967e8106",
+        "question": [
+          "Quais marcas mais venderam nos ultimos 6 meses?"
+        ],
+        "sql": [
+          "SELECT marca,\n",
+          "       ROUND(SUM(receita), 2) AS receita\n",
+          "FROM lakehouse_rotaperfume.gold.fato_vendas\n",
+          "WHERE data_pedido >= ADD_MONTHS(DATE'2026-08-31', -6)\n",
+          "GROUP BY marca\n",
+          "ORDER BY receita DESC"
+        ]
+      },
+      {
+        "id": "c4661df62203943c80621c59671f52a8",
+        "question": [
+          "Os produtos lancados venderam de verdade, ou so enquanto eram novidade?"
+        ],
+        "sql": [
+          "SELECT descricao,\n",
+          "       marca,\n",
+          "       data_lancamento,\n",
+          "       receita_120d,\n",
+          "       receita_apos_120d,\n",
+          "       pct_nos_120d\n",
+          "FROM lakehouse_rotaperfume.gold.efeito_lancamento\n",
+          "ORDER BY receita_120d DESC"
+        ]
+      },
+      {
+        "id": "f499cef2f990de3aea0e530b9ee52e66",
+        "question": [
+          "Dezembro foi um mes ruim?"
+        ],
+        "sql": [
+          "SELECT ano,\n",
+          "       mes,\n",
+          "       nome_mes,\n",
+          "       mes_pico_setor,\n",
+          "       receita\n",
+          "FROM lakehouse_rotaperfume.gold.receita_mensal\n",
+          "WHERE mes IN (10, 11, 12, 1)\n",
+          "ORDER BY ano, mes"
+        ]
+      }
+    ],
+    "text_instructions": [
+      {
+        "content": [
+          "CONTEXTO\n",
+          "A Rota do Perfume e uma distribuidora B2B de perfumaria arabe. Ela NAO vende ao consumidor final: vende para o varejo -- lojas de shopping, quiosques, perfumarias de bairro e revendedoras autonomas. Todo \"cliente\" nesta base e uma empresa compradora, nunca uma pessoa fisica.\n",
+          "O periodo coberto vai de 2024-09-01 a 2026-08-31. O dia de referencia do dataset e 2026-08-31: use essa data como \"hoje\" e NUNCA use current_date(), que e posterior ao fim dos dados e inflaria qualquer calculo de recencia.\n",
+          "Use apenas tabelas e views do schema gold. A bronze e texto puro sem limpeza e a silver e camada intermediaria: nenhuma das duas responde pergunta de negocio, mesmo que o nome da coluna pareca certo.\n",
+          "\n",
+          "REGRA DE SAZONALIDADE -- A MAIS IMPORTANTE\n",
+          "O pico da distribuidora e o mes ANTERIOR a data comemorativa, porque o varejo compra antes para ter estoque na data.\n",
+          "Picos: abril (Dia das Maes, em maio), junho (Namorados) e outubro (Black Friday, em novembro).\n",
+          "Vales: dezembro e janeiro. O varejo ja se abasteceu nos picos anteriores e passa o comeco do ano escoando estoque.\n",
+          "Dezembro e janeiro serem baixos e SAUDAVEL e ESPERADO. Nunca chame isso de queda, de problema ou de mes ruim. Se perguntarem \"dezembro foi ruim?\", a resposta correta e NAO: e vale de setor, por desenho do calendario do varejo, nao desempenho da empresa.\n",
+          "A view gold.receita_mensal tem a coluna mes_pico_setor exatamente para isso. Consulte essa coluna antes de qualificar qualquer mes como bom ou ruim, e compare um mes sempre com o MESMO mes do ano anterior, nunca com o mes imediatamente anterior.\n",
+          "\n",
+          "GLOSSARIO\n",
+          "Ruptura: produto com saldo zero no snapshot diario de estoque -- existe no catalogo mas nao esta disponivel para venda. Media da empresa: cerca de 11,7% das fotos de estoque.\n",
+          "Carteira: o conjunto de clientes sob responsabilidade de um vendedor.\n",
+          "Oportunidade: negocio em negociacao no CRM, com etapa, valor estimado e desfecho (ganha, perdida, ou nenhuma das duas = ainda em aberto).\n",
+          "Devolucao: item que voltou. Entra no fato com quantidade e receita NEGATIVAS, e nao e excluido.\n",
+          "SKU: codigo do produto. Sao 292 no catalogo.\n",
+          "Segmento: tipo de ponto de venda do cliente (loja de shopping, quiosque, revendedora autonoma).\n",
+          "Atingimento de meta: receita do vendedor no mes dividida pela meta do mesmo mes, em %. Pronto em mart_vendas_por_vendedor.atingimento_pct.\n",
+          "Curva ABC: classificacao do produto por participacao na receita do mes. A e o topo, C e a cauda. Pronta em mart_produto_performance.curva_abc.\n",
+          "\n",
+          "REGRAS DE CALCULO\n",
+          "Receita: SUM(receita) no fato. E LIQUIDA -- a devolucao ja entra com sinal negativo. Para o bruto vendido, filtre devolucao = false. A diferenca entre os dois e cerca de R$ 1,26 milhao no periodo.\n",
+          "Margem: SUM(margem) = receita menos custo do produto. NAO inclui frete, comissao de vendedor nem impostos. Diga isso sempre que reportar margem como lucro.\n",
+          "Margem %: margem dividida pela receita do mesmo recorte. Nunca some percentuais de margem entre si; recalcule a partir das somas.\n",
+          "Ticket medio: receita dividida por COUNT(DISTINCT pedido_id), nunca pelo numero de linhas -- o fato esta no grao de ITEM, e um pedido tem cerca de 7 itens.\n",
+          "Churn / cliente em risco: mais de 90 dias sem pedido, contados a partir de 2026-08-31. Sao 503 clientes, prontos em gold.clientes_em_risco. A coluna receita_media_mensal e NULL para quem comprou uma unica vez -- sem dois pedidos nao ha janela para medir ritmo, e esses nao devem entrar em soma de receita perdida.\n",
+          "Pedido cancelado nao esta no fato: foi excluido na modelagem, nao tente filtrar por status de cancelamento.\n",
+          "\n",
+          "REGRA DE OURO -- NAO INVENTE\n",
+          "Use SEMPRE as tabelas e funcoes deste espaco. Nunca invente numero, nome de cliente ou quantidade de estoque.\n",
+          "Se a resposta nao estiver nos dados deste espaco, diga que nao esta -- nao estime, nao arredonde de cabeca e nao complete com exemplo plausivel.\n",
+          "Quantidade de estoque vem SEMPRE de gold.checar_disponibilidade ou de gold.ruptura_por_marca, nunca de memoria: o saldo muda toda semana.\n",
+          "\n",
+          "A FILA DA SEMANA\n",
+          "gold.fila_semanal tem as 200 ligacoes da semana, ja ordenadas e distribuidas por vendedor. Uma linha por contato, com o motivo escrito em portugues na coluna motivo e o produto a oferecer na coluna sugestao.\n",
+          "Quando perguntarem \"quem eu ligo essa semana\", filtre por vendedor e ordene por ordem -- ou chame gold.priorizar_carteira(nome_do_vendedor, quantos).\n",
+          "Quando perguntarem POR QUE um cliente esta na lista, leia a coluna motivo: ela ja traz os numeros do cliente. Nao invente uma explicacao nova.\n",
+          "A fila e GLOBAL por score, nao cota por vendedor: um vendedor pode ter 10 contatos e outro apenas 1, e isso significa que a carteira do primeiro esta mais quente -- nao que ele seja melhor vendedor.\n",
+          "gold.score_propensao tem a nota de TODOS os clientes, nao so dos 200. O score e probabilidade de compra nos proximos 7 dias, de 0 a 1: e ordenacao, nao garantia.\n",
+          "As quatro funcoes do espaco: gold.priorizar_carteira (para quem ligar), gold.contexto_cliente (quem e o cliente), gold.sugerir_produtos (o que oferecer) e gold.checar_disponibilidade (tem em estoque?).\n",
+          "\n",
+          "ONDE PROCURAR CADA PERGUNTA\n",
+          "Quem eu ligo essa semana -> gold.fila_semanal, ou gold.priorizar_carteira(vendedor, quantos)\n",
+          "Por que este cliente esta na minha lista -> a coluna motivo de gold.fila_semanal\n",
+          "Qual a nota de um cliente -> gold.score_propensao\n",
+          "Evolucao mes a mes -> gold.receita_mensal\n",
+          "Quais marcas mais venderam -> gold.ranking_marcas\n",
+          "Qual categoria da mais margem -> gold.margem_por_categoria\n",
+          "Quem parou de comprar -> gold.clientes_em_risco\n",
+          "O lancamento vendeu de verdade -> gold.efeito_lancamento\n",
+          "Que marca falta na prateleira -> gold.ruptura_por_marca\n",
+          "Vendedor contra a meta -> gold.mart_vendas_por_vendedor\n",
+          "Produto curva A no mes -> gold.mart_produto_performance\n",
+          "Quanto ha a receber e com que atraso -> gold.mart_financeiro_recebimento\n",
+          "Qualquer corte que as views nao cobrem -> gold.fato_vendas com as dimensoes.\n",
+          "Prefira a view ao fato quando existir uma que responda a pergunta: ela ja traz a regra de negocio embutida. Quando a resposta depender de uma escolha sua (janela de tempo, recorte, definicao), diga qual escolha voce fez ANTES do numero."
+        ],
+        "id": "9c90dd840946ed31e4654f8c07f7ea29"
+      }
+    ]
+  },
+  "version": 2
+}
