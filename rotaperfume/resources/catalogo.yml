@@ -1,0 +1,31 @@
+# O catalogo como codigo: tres schemas e um volume.
+#
+# O catalogo em si nasce em scripts/criar-catalogo.sh, por SQL -- a API do Unity
+# Catalog recusa cria-lo neste workspace (Default Storage ligado). Daqui para
+# baixo, tudo e recurso do bundle: some, um `bundle deploy` traz de volta igual.
+resources:
+  schemas:
+    bronze:
+      catalog_name: ${var.catalog}
+      name: bronze
+      comment: Camada bronze - o dado como saiu do sistema de origem, sem limpeza, so tipado e datado.
+
+    silver:
+      catalog_name: ${var.catalog}
+      name: silver
+      comment: Camada silver - o dado limpo, deduplicado e conformado, com as regras de negocio ja aplicadas.
+
+    gold:
+      catalog_name: ${var.catalog}
+      name: gold
+      comment: Camada gold - as tabelas de consumo, no formato que o dashboard e o analista leem.
+
+  volumes:
+    raw:
+      catalog_name: ${var.catalog}
+      # Referencia ao schema (e nao a string 'bronze') para o deploy criar o
+      # schema antes do volume.
+      schema_name: ${resources.schemas.bronze.name}
+      name: raw
+      volume_type: MANAGED
+      comment: Area raw - o arquivo original do ERP e do CRM, byte por byte, antes de virar tabela.

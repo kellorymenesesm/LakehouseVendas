@@ -1,0 +1,45 @@
+# Declarative Automation Bundle do projeto rotaperfume.
+# https://docs.databricks.com/dev-tools/bundles/index.html
+#
+# O catalogo NAO esta declarado aqui de proposito: veja scripts/criar-catalogo.sh.
+# O resto do catalogo (schemas e volume) esta em resources/catalogo.yml.
+bundle:
+  name: rotaperfume
+  uuid: 751394c8-966f-4acc-a405-e605033fee1a
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog:
+    description: Catalogo do lakehouse da noite.
+    default: lakehouse_rotaperfume
+  warehouse_id:
+    description: SQL Warehouse serverless usado pelos scripts SQL.
+    default: a5b638ac09d4df5e
+
+targets:
+  dev:
+    default: true
+    workspace:
+      host: https://dbc-25182e7d-2140.cloud.databricks.com
+
+    # ARMADILHA: nao use `mode: development` aqui.
+    # Ele prefixa o nome dos recursos com '[dev seu_usuario]' -- inclusive os
+    # SCHEMAS do Unity Catalog, que virariam dev_fulano_bronze e quebrariam
+    # todo o SQL da noite. O que a gente queria do mode development era so o
+    # agendamento pausado, e isso da para pedir explicitamente:
+    presets:
+      trigger_pause_status: PAUSED
+
+  # prod ainda nao e usado nesta noite. Quando for: sem `mode: development` no
+  # dev, os dois targets declaram os MESMOS schemas do UC (bronze/silver/gold
+  # dentro do mesmo catalogo). Antes de deployar prod, de a ele outro catalogo.
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-25182e7d-2140.cloud.databricks.com
+      root_path: /Workspace/Users/kelly.kellory@gmail.com/.bundle/${bundle.name}/${bundle.target}
+    permissions:
+      - user_name: kelly.kellory@gmail.com
+        level: CAN_MANAGE
