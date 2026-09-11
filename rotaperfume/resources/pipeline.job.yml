@@ -13,6 +13,18 @@
 #                            (entrega 4 - FEITA) - modelagem para consumo,
 #                            e os 9 testes que PARAM o job se o numero mudar.
 #        v
+#   metricas_de_negocio -> auditoria_de_metadado
+#                            (entrega 6 - FEITA) - as 6 views com nome de
+#                            negocio, e o statement que quebra o job se faltar
+#                            COMMENT. Saem de gold_marts, EM PARALELO com os
+#                            testes: nenhuma das duas le o que os testes gravam.
+#        v
+#   ml_features -> ml_modelo -> ml_fila
+#                            (ML, prompts 1 a 3 - FEITOS) - uma linha por CLIENTE,
+#                            com o que se sabia dele ate uma data de corte.
+#                            Depois de `testes`: modelo nao se treina com dado
+#                            que ainda nao passou nos testes.
+#        v
 #   qualidade_expectativas   (entrega 5) - o pipeline se auto-audita
 #        v
 #   publicacao_dashboard     (entrega 6) - o numero chega em quem decide
@@ -132,6 +144,73 @@ resources:
             warehouse_id: ${var.warehouse_id}
             file:
               path: ../src/gold/08-testes.sql
+
+        # ---------------------------------------------------------------
+        # ENTREGA 6 - o dado preparado para consumo por linguagem natural.
+        # As duas dependem de gold_marts, nao de `testes`: rodam EM PARALELO
+        # com os testes de qualidade, porque nenhuma das duas le o que os
+        # testes escrevem. No DAG isso aparece como dois ramos saindo do
+        # mesmo no -- e a leitura visual de "isto aqui nao depende daquilo".
+        # ---------------------------------------------------------------
+        - task_key: metricas_de_negocio
+          description: Seis views com nome de negocio - o nome da pergunta e o nome da tabela viram o mesmo.
+          depends_on:
+            - task_key: gold_marts
+          sql_task:
+            warehouse_id: ${var.warehouse_id}
+            file:
+              path: ../src/gold/09-metricas-negocio.sql
+
+        # Depois das views, nunca antes: ela audita o metadado DELAS.
+        # Metadado faltando e bug, e este e o statement que trata como tal.
+        - task_key: auditoria_de_metadado
+          description: Quebra o job se alguma tabela ou view da gold estiver sem COMMENT, ou se faltar comentario em coluna que o Genie le.
+          depends_on:
+            - task_key: metricas_de_negocio
+          sql_task:
+            warehouse_id: ${var.warehouse_id}
+            file:
+              path: ../src/gold/10-auditoria-metadado.sql
+
+        # ---------------------------------------------------------------
+        # CAMADA DE ML - as features. Depende de `testes` de proposito:
+        # modelo nao se treina com dado que ainda nao passou nos testes.
+        # Se um teste de qualidade cair, esta tarefa nem comeca -- e a fila
+        # da semana fica com o retrato de ontem em vez do errado de hoje.
+        # ---------------------------------------------------------------
+        - task_key: ml_features
+          description: Uma linha por cliente com o que se sabia dele ate um corte - gold.features_treino e gold.features_cliente.
+          depends_on:
+            - task_key: testes
+          notebook_task:
+            notebook_path: ../src/ml/11-features.py
+            base_parameters:
+              catalog: ${var.catalog}
+
+        # O modelo depois das features, nunca em paralelo: ele le as duas
+        # tabelas que a tarefa anterior grava. A tarefa carrega tres asserts
+        # que derrubam o job -- inclusive um que quebra se o AUC ficar BOM
+        # DEMAIS, porque vazamento nao chega com erro, chega com elogio.
+        - task_key: ml_modelo
+          description: Treina o modelo de propensao, registra no UC com alias @prod e grava gold.score_propensao.
+          depends_on:
+            - task_key: ml_features
+          notebook_task:
+            notebook_path: ../src/ml/12-modelo.py
+            base_parameters:
+              catalog: ${var.catalog}
+
+        # O ultimo metro: o score vira lista com nome, motivo e o que oferecer.
+        # sql_task, nao notebook: e SQL puro, e assim as quatro funcoes do
+        # agente nascem no mesmo arquivo que a tabela que elas consultam.
+        - task_key: ml_fila
+          description: As 200 ligacoes da semana com motivo em portugues, e as 4 funcoes SQL que o agente chama.
+          depends_on:
+            - task_key: ml_modelo
+          sql_task:
+            warehouse_id: ${var.warehouse_id}
+            file:
+              path: ../src/ml/13-fila.sql
 
       # Todo dia as 6h de Sao Paulo. No target dev isso nasce PAUSED, por causa
       # do `presets: trigger_pause_status` do databricks.yml.
