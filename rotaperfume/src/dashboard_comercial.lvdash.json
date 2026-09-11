@@ -1,0 +1,1124 @@
+{
+  "datasets": [
+    {
+      "config": {
+        "comment": "Métricas de vendas excluindo devoluções",
+        "dimensions": [
+          {
+            "comment": "Data em que o pedido foi realizado",
+            "displayName": "Data do Pedido",
+            "expr": "data_pedido",
+            "format": {
+              "dateFormat": "locale_short_month",
+              "type": "date"
+            },
+            "name": "data_pedido"
+          },
+          {
+            "comment": "Mês do pedido para análise temporal",
+            "displayName": "Mês",
+            "expr": "DATE_TRUNC('MONTH', data_pedido)",
+            "format": {
+              "dateFormat": "locale_short_month",
+              "type": "date"
+            },
+            "name": "mes_pedido"
+          },
+          {
+            "comment": "Canal de origem da venda",
+            "displayName": "Canal de Venda",
+            "expr": "canal",
+            "name": "canal"
+          },
+          {
+            "comment": "Categoria do produto vendido",
+            "displayName": "Categoria",
+            "expr": "categoria",
+            "name": "categoria"
+          },
+          {
+            "comment": "Marca do produto",
+            "displayName": "Marca",
+            "expr": "marca",
+            "name": "marca"
+          },
+          {
+            "comment": "Tipo de ponto de venda do cliente",
+            "displayName": "Segmento Cliente",
+            "expr": "segmento",
+            "name": "segmento"
+          },
+          {
+            "comment": "Estado do cliente",
+            "displayName": "UF",
+            "expr": "uf",
+            "name": "uf"
+          },
+          {
+            "comment": "Cidade do cliente",
+            "displayName": "Cidade",
+            "expr": "cidade",
+            "name": "cidade"
+          }
+        ],
+        "filter": "devolucao = false",
+        "measures": [
+          {
+            "comment": "Soma da receita de vendas",
+            "displayName": "Receita Total",
+            "expr": "SUM(receita)",
+            "format": {
+              "currencyCode": "BRL",
+              "decimalPlaces": {
+                "places": 2,
+                "type": "exact"
+              },
+              "type": "currency"
+            },
+            "name": "receita_total",
+            "synonyms": [
+              "faturamento",
+              "vendas"
+            ]
+          },
+          {
+            "comment": "Total de unidades vendidas",
+            "displayName": "Quantidade Vendida",
+            "expr": "SUM(quantidade)",
+            "format": {
+              "decimalPlaces": {
+                "places": 0,
+                "type": "exact"
+              },
+              "type": "number"
+            },
+            "name": "quantidade_vendida"
+          },
+          {
+            "comment": "Soma da margem de lucro",
+            "displayName": "Margem Total",
+            "expr": "SUM(margem)",
+            "format": {
+              "currencyCode": "BRL",
+              "decimalPlaces": {
+                "places": 2,
+                "type": "exact"
+              },
+              "type": "currency"
+            },
+            "name": "margem_total"
+          },
+          {
+            "comment": "Soma dos custos",
+            "displayName": "Custo Total",
+            "expr": "SUM(custo)",
+            "format": {
+              "currencyCode": "BRL",
+              "decimalPlaces": {
+                "places": 2,
+                "type": "exact"
+              },
+              "type": "currency"
+            },
+            "name": "custo_total"
+          },
+          {
+            "comment": "Total de pedidos distintos",
+            "displayName": "Número de Pedidos",
+            "expr": "COUNT(DISTINCT pedido_id)",
+            "format": {
+              "decimalPlaces": {
+                "places": 0,
+                "type": "exact"
+              },
+              "type": "number"
+            },
+            "name": "numero_pedidos"
+          },
+          {
+            "comment": "Receita média por pedido",
+            "displayName": "Ticket Médio",
+            "expr": "SUM(receita) / COUNT(DISTINCT pedido_id)",
+            "format": {
+              "currencyCode": "BRL",
+              "decimalPlaces": {
+                "places": 2,
+                "type": "exact"
+              },
+              "type": "currency"
+            },
+            "name": "ticket_medio"
+          },
+          {
+            "comment": "Percentual de margem sobre receita",
+            "displayName": "Margem %",
+            "expr": "(SUM(margem) / SUM(receita)) * 100",
+            "format": {
+              "decimalPlaces": {
+                "places": 1,
+                "type": "exact"
+              },
+              "type": "percentage"
+            },
+            "name": "margem_percentual"
+          }
+        ],
+        "source": "lakehouse_rotaperfume.gold.fato_vendas",
+        "version": "1.1"
+      },
+      "displayName": "Dashboard de Vendas - Rota Perfume",
+      "name": "dashboard_de_vendas_rota_perfume"
+    },
+    {
+      "name": "fila_semanal",
+      "displayName": "Fila da semana",
+      "config": {
+        "version": "1.1",
+        "source": "lakehouse_rotaperfume.gold.fila_semanal",
+        "comment": "As 200 ligacoes da semana, ja ordenadas e distribuidas por vendedor. Uma linha por contato.",
+        "dimensions": [
+          {
+            "comment": "Vendedor responsavel pela carteira do cliente.",
+            "displayName": "Vendedor",
+            "expr": "vendedor",
+            "name": "vendedor"
+          },
+          {
+            "comment": "Posicao do contato dentro da fila deste vendedor.",
+            "displayName": "Ordem",
+            "expr": "ordem",
+            "name": "ordem"
+          },
+          {
+            "comment": "Nome da empresa cliente.",
+            "displayName": "Cliente",
+            "expr": "razao_social",
+            "name": "razao_social"
+          },
+          {
+            "comment": "Cidade do cliente.",
+            "displayName": "Cidade",
+            "expr": "cidade",
+            "name": "cidade"
+          },
+          {
+            "comment": "Estado do cliente.",
+            "displayName": "UF",
+            "expr": "uf",
+            "name": "uf"
+          },
+          {
+            "comment": "O score em quartis: Fria, Morna, Quente, Muito quente.",
+            "displayName": "Faixa",
+            "expr": "faixa",
+            "name": "faixa"
+          },
+          {
+            "comment": "Por que este cliente entrou na fila, em portugues.",
+            "displayName": "Motivo",
+            "expr": "motivo",
+            "name": "motivo"
+          },
+          {
+            "comment": "Produto a oferecer, com o saldo em estoque.",
+            "displayName": "O que oferecer",
+            "expr": "sugestao",
+            "name": "sugestao"
+          }
+        ],
+        "measures": [
+          {
+            "name": "contatos",
+            "displayName": "Contatos",
+            "expr": "COUNT(1)",
+            "comment": "Quantidade de ligacoes a fazer.",
+            "format": {
+              "type": "number",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 0
+              }
+            }
+          },
+          {
+            "name": "vendedores",
+            "displayName": "Vendedores",
+            "expr": "COUNT(DISTINCT vendedor)",
+            "comment": "Quantos vendedores tem ao menos um contato na fila.",
+            "format": {
+              "type": "number",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 0
+              }
+            }
+          },
+          {
+            "name": "score_medio",
+            "displayName": "Nota media",
+            "expr": "AVG(score)",
+            "comment": "Probabilidade media de compra nos proximos 7 dias.",
+            "format": {
+              "type": "number-percent",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1
+              }
+            }
+          },
+          {
+            "name": "ticket_medio_fila",
+            "displayName": "Ticket medio",
+            "expr": "AVG(ticket_medio)",
+            "comment": "Ticket medio dos clientes da fila.",
+            "format": {
+              "type": "currency",
+              "currencyCode": "BRL",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "displayName": "Visao geral",
+      "layout": [
+        {
+          "position": {
+            "height": 2,
+            "width": 3,
+            "x": 0,
+            "y": 0
+          },
+          "widget": {
+            "name": "receita_total",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dashboard_de_vendas_rota_perfume",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "expression": "MEASURE(`receita_total`)",
+                      "name": "measure(receita_total)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(receita_total)",
+                  "rowNumber": 0
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Receita Total"
+              },
+              "version": 2,
+              "widgetType": "counter"
+            }
+          }
+        },
+        {
+          "position": {
+            "height": 2,
+            "width": 3,
+            "x": 3,
+            "y": 0
+          },
+          "widget": {
+            "name": "total_de_pedidos",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dashboard_de_vendas_rota_perfume",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "expression": "MEASURE(`numero_pedidos`)",
+                      "name": "measure(numero_pedidos)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(numero_pedidos)",
+                  "rowNumber": 0
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Total de Pedidos"
+              },
+              "version": 2,
+              "widgetType": "counter"
+            }
+          }
+        },
+        {
+          "position": {
+            "height": 2,
+            "width": 3,
+            "x": 6,
+            "y": 0
+          },
+          "widget": {
+            "name": "ticket_m_dio",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dashboard_de_vendas_rota_perfume",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "expression": "MEASURE(`ticket_medio`)",
+                      "name": "measure(ticket_medio)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(ticket_medio)",
+                  "rowNumber": 0
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Ticket Médio"
+              },
+              "version": 2,
+              "widgetType": "counter"
+            }
+          }
+        },
+        {
+          "position": {
+            "height": 2,
+            "width": 3,
+            "x": 9,
+            "y": 0
+          },
+          "widget": {
+            "name": "margem",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dashboard_de_vendas_rota_perfume",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "expression": "MEASURE(`margem_percentual`)",
+                      "name": "measure(margem_percentual)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(margem_percentual)",
+                  "rowNumber": 0
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Margem %"
+              },
+              "version": 2,
+              "widgetType": "counter"
+            }
+          }
+        },
+        {
+          "position": {
+            "height": 4,
+            "width": 6,
+            "x": 0,
+            "y": 2
+          },
+          "widget": {
+            "name": "receita_por_m_s",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dashboard_de_vendas_rota_perfume",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "expression": "DATE_TRUNC(\"MONTH\", `mes_pedido`)",
+                      "name": "monthly(mes_pedido)"
+                    },
+                    {
+                      "expression": "MEASURE(`receita_total`)",
+                      "name": "measure(receita_total)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "x": {
+                  "displayName": "Month",
+                  "fieldName": "monthly(mes_pedido)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "displayName": "receita_total",
+                  "fieldName": "measure(receita_total)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Receita por Mês"
+              },
+              "version": 3,
+              "widgetType": "line"
+            }
+          }
+        },
+        {
+          "position": {
+            "height": 4,
+            "width": 6,
+            "x": 6,
+            "y": 2
+          },
+          "widget": {
+            "name": "receita_por_canal",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dashboard_de_vendas_rota_perfume",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "expression": "`canal`",
+                      "name": "canal"
+                    },
+                    {
+                      "expression": "MEASURE(`receita_total`)",
+                      "name": "measure(receita_total)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "color": {
+                  "displayName": "canal",
+                  "fieldName": "canal",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "x": {
+                  "displayName": "canal",
+                  "fieldName": "canal",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "displayName": "receita_total",
+                  "fieldName": "measure(receita_total)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Receita por Canal"
+              },
+              "version": 3,
+              "widgetType": "bar"
+            }
+          }
+        },
+        {
+          "position": {
+            "height": 4,
+            "width": 6,
+            "x": 0,
+            "y": 6
+          },
+          "widget": {
+            "name": "top_categorias_por_receita",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dashboard_de_vendas_rota_perfume",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "expression": "`categoria`",
+                      "name": "categoria"
+                    },
+                    {
+                      "expression": "MEASURE(`receita_total`)",
+                      "name": "measure(receita_total)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "color": {
+                  "displayName": "categoria",
+                  "fieldName": "categoria",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "x": {
+                  "displayName": "categoria",
+                  "fieldName": "categoria",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "displayName": "receita_total",
+                  "fieldName": "measure(receita_total)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Top Categorias por Receita"
+              },
+              "version": 3,
+              "widgetType": "bar"
+            }
+          }
+        },
+        {
+          "position": {
+            "height": 4,
+            "width": 6,
+            "x": 6,
+            "y": 6
+          },
+          "widget": {
+            "name": "top_marcas_por_receita",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dashboard_de_vendas_rota_perfume",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "expression": "`marca`",
+                      "name": "marca"
+                    },
+                    {
+                      "expression": "MEASURE(`receita_total`)",
+                      "name": "measure(receita_total)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "color": {
+                  "displayName": "marca",
+                  "fieldName": "marca",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "x": {
+                  "displayName": "marca",
+                  "fieldName": "marca",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "displayName": "receita_total",
+                  "fieldName": "measure(receita_total)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Top Marcas por Receita"
+              },
+              "version": 3,
+              "widgetType": "bar"
+            }
+          }
+        },
+        {
+          "position": {
+            "height": 5,
+            "width": 12,
+            "x": 0,
+            "y": 10
+          },
+          "widget": {
+            "name": "vendas_por_estado",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dashboard_de_vendas_rota_perfume",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "expression": "`uf`",
+                      "name": "uf"
+                    },
+                    {
+                      "expression": "MEASURE(`receita_total`)",
+                      "name": "measure(receita_total)"
+                    },
+                    {
+                      "expression": "MEASURE(`numero_pedidos`)",
+                      "name": "measure(numero_pedidos)"
+                    },
+                    {
+                      "expression": "MEASURE(`ticket_medio`)",
+                      "name": "measure(ticket_medio)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "uf"
+                  },
+                  {
+                    "fieldName": "measure(receita_total)"
+                  },
+                  {
+                    "fieldName": "measure(numero_pedidos)"
+                  },
+                  {
+                    "fieldName": "measure(ticket_medio)"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Vendas por Estado"
+              },
+              "version": 2,
+              "widgetType": "table"
+            }
+          }
+        },
+        {
+          "position": {
+            "height": 4,
+            "width": 6,
+            "x": 0,
+            "y": 15
+          },
+          "widget": {
+            "name": "receita_por_segmento",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dashboard_de_vendas_rota_perfume",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "expression": "MEASURE(`receita_total`)",
+                      "name": "measure(receita_total)"
+                    },
+                    {
+                      "expression": "`segmento`",
+                      "name": "segmento"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "angle": {
+                  "displayName": "receita_total",
+                  "fieldName": "measure(receita_total)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "displayName": "segmento",
+                  "fieldName": "segmento",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Receita por Segmento"
+              },
+              "version": 3,
+              "widgetType": "pie"
+            }
+          }
+        }
+      ],
+      "layoutVersion": "GRID_V1",
+      "name": "000b558b",
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "fila_da_semana",
+      "displayName": "Fila da semana",
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1",
+      "layout": [
+        {
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 1
+          },
+          "widget": {
+            "name": "titulo_fila",
+            "textbox_spec": "# Fila da semana\nAs 200 ligacoes prioritarias, em ordem. Escolha seu nome no filtro. O **motivo** explica por que cada cliente esta na lista; a **sugestao** traz o produto e o saldo em estoque."
+          }
+        },
+        {
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 3,
+            "height": 3
+          },
+          "widget": {
+            "name": "filtro_vendedor",
+            "queries": [
+              {
+                "name": "fila_vendedor",
+                "query": {
+                  "datasetName": "fila_semanal",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "name": "vendedor",
+                      "expression": "`vendedor`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "vendedor",
+                    "displayName": "Vendedor",
+                    "queryName": "fila_vendedor"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Vendedor"
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "x": 3,
+            "y": 1,
+            "width": 3,
+            "height": 3
+          },
+          "widget": {
+            "name": "contatos_na_fila",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "fila_semanal",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "name": "measure(contatos)",
+                      "expression": "MEASURE(`contatos`)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(contatos)",
+                  "rowNumber": 0
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Ligacoes"
+              },
+              "version": 2,
+              "widgetType": "counter"
+            }
+          }
+        },
+        {
+          "position": {
+            "x": 6,
+            "y": 1,
+            "width": 3,
+            "height": 3
+          },
+          "widget": {
+            "name": "nota_media",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "fila_semanal",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "name": "measure(score_medio)",
+                      "expression": "MEASURE(`score_medio`)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(score_medio)",
+                  "rowNumber": 0
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Nota media"
+              },
+              "version": 2,
+              "widgetType": "counter"
+            }
+          }
+        },
+        {
+          "position": {
+            "x": 9,
+            "y": 1,
+            "width": 3,
+            "height": 3
+          },
+          "widget": {
+            "name": "ticket_da_fila",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "fila_semanal",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "name": "measure(ticket_medio_fila)",
+                      "expression": "MEASURE(`ticket_medio_fila`)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(ticket_medio_fila)",
+                  "rowNumber": 0
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Ticket medio"
+              },
+              "version": 2,
+              "widgetType": "counter"
+            }
+          }
+        },
+        {
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 12,
+            "height": 9
+          },
+          "widget": {
+            "name": "tabela_fila",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "fila_semanal",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "ordem",
+                      "expression": "`ordem`"
+                    },
+                    {
+                      "name": "razao_social",
+                      "expression": "`razao_social`"
+                    },
+                    {
+                      "name": "cidade",
+                      "expression": "`cidade`"
+                    },
+                    {
+                      "name": "uf",
+                      "expression": "`uf`"
+                    },
+                    {
+                      "name": "faixa",
+                      "expression": "`faixa`"
+                    },
+                    {
+                      "name": "motivo",
+                      "expression": "`motivo`"
+                    },
+                    {
+                      "name": "sugestao",
+                      "expression": "`sugestao`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "data": {
+                "queryName": "main_query"
+              },
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "ordem"
+                  },
+                  {
+                    "fieldName": "razao_social"
+                  },
+                  {
+                    "fieldName": "cidade"
+                  },
+                  {
+                    "fieldName": "uf"
+                  },
+                  {
+                    "fieldName": "faixa"
+                  },
+                  {
+                    "fieldName": "motivo"
+                  },
+                  {
+                    "fieldName": "sugestao"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Quem ligar, por que, e o que oferecer"
+              },
+              "version": 2,
+              "widgetType": "table"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "uiSettings": {
+    "applyModeEnabled": false,
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    }
+  }
+}

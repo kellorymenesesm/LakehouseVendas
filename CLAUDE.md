@@ -108,9 +108,31 @@ Três defeitos encontrados e corrigidos aqui, todos por inspeção do resultado:
    `SCALAR_SUBQUERY_IS_IN_GROUP_BY_OR_AGGREGATE_FUNCTION` — use CTE + CROSS JOIN.
    Sem isso, `marcas_preferidas` saía com marca repetida.
 
-**Pendente do prompt 3:** o item 4 (página "Fila da semana" no dashboard) não
-foi feito — `resources/dashboard-comercial.lvdash.json` não existe, porque a
-entrega 5 ainda não foi feita. Fazer junto com o `.llm/prompt-05-dashboard.md`.
+**Dashboard versionado** (feito pela usuária via Genie no workspace, depois
+trazido para o bundle): `Dashboard de Vendas - Rota Perfume 2026-09-11 14:46:01`,
+id `01f1ae08c0841a1e9c508000590f9aa2`, em
+`resources/dashboard_comercial.dashboard.yml` + `src/dashboard_comercial.lvdash.json`.
+Duas páginas: "Visão geral" (10 widgets, os do Genie) e **"Fila da semana"**
+(filtro de vendedor, 3 KPIs e a tabela dos 200 contatos) — isso fecha o item 4
+do prompt 3. O dataset dele é do formato semântico novo (`config` com `source`,
+`dimensions`, `measures`), não `queryLines`.
+
+**Duas armadilhas medidas aqui:**
+1. `bundle generate dashboard` **sem `--bind`** faz o deploy CRIAR UM SEGUNDO
+   dashboard em vez de assumir o existente. Use `--bind`, ou
+   `bundle deployment bind <chave> <id>` depois.
+2. Sem `parent_path` no recurso, o deploy quer **recriar** o dashboard (ID e
+   URL novos): o bundle deploya em `.bundle/rotaperfume/dev/` e o dashboard
+   mora em `/Users/<usuario>/`, e mover de pasta é recriar. Fixe
+   `parent_path: /Users/kelly.kellory@gmail.com` e o deploy vira `Updated`.
+   **Nunca responda `--auto-approve` a esse aviso.**
+
+Atenção: o dataset do dashboard filtra `devolucao = false`, ou seja mostra o
+**bruto vendido** (~R$ 103,5 mi), não os R$ 102.303.828,05 líquidos que o
+teste 1 do job protege. Os dois números convivem na mesma tela.
+
+**Ainda não feito:** o `.llm/prompt-05-dashboard.md` em si (dashboard como
+código desde o zero) — o dashboard já está versionado, mas por outro caminho.
 
 **O número que não pode mudar:** R$ 102.303.828,05 — idêntico na silver, no
 `fato_vendas`, no `mart_vendas_por_vendedor` e no `mart_produto_performance`.
