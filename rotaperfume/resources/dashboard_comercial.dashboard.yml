@@ -1,0 +1,21 @@
+# O dashboard comercial como codigo.
+#
+# Ele NASCEU clicando (via Genie, no workspace) e foi trazido para o bundle com
+#   databricks bundle generate dashboard --existing-id <id> --key dashboard_comercial --bind
+# O --bind e a parte que nao pode faltar: sem ele o deploy CRIA UM SEGUNDO
+# dashboard em vez de assumir o que ja existe.
+#
+# ARMADILHA MEDIDA: o parent_path abaixo NAO e decoracao. O bundle deploya seus
+# recursos em .bundle/rotaperfume/dev/ por padrao, e o dashboard mora na pasta
+# do usuario. Mover um dashboard de pasta faz o bundle APAGAR E RECRIAR -- com
+# id e URL novos, quebrando todo link ja compartilhado. Apontando o parent_path
+# para onde ele ja esta, o deploy vira um update no lugar.
+#
+# Pela mesma razao, NUNCA renomeie a chave `dashboard_comercial`.
+resources:
+  dashboards:
+    dashboard_comercial:
+      display_name: "Dashboard de Vendas - Rota Perfume 2026-09-11 14:46:01"
+      warehouse_id: ${var.warehouse_id}
+      parent_path: /Users/kelly.kellory@gmail.com
+      file_path: ../src/dashboard_comercial.lvdash.json
